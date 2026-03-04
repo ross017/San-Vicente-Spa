@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>San Vicente Spa & Wellness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream:     #f5f0e8;
+      --beige:     #e8dcc8;
+      --sand:      #d4c4a8;
+      --taupe:     #b8a590;
+      --brown:     #8b6f4e;
+      --dark:      #4a3728;
+      --espresso:  #2c1f14;
+      --white:     #faf8f4;
+      --gold:      #c9a96e;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--espresso);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(184,165,144,0.3);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(44,31,20,0.1); }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--dark);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); font-style: italic; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      transition: color 0.25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--brown); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--brown);
+      color: var(--cream) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      letter-spacing: 0.15em;
+      transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--dark) !important; color: var(--cream) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: var(--dark);
+      transition: all 0.3s;
+      display: block;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: var(--white);
+      z-index: 999;
+      padding: 2rem 5%;
+      flex-direction: column;
+      gap: 1.5rem;
+      border-bottom: 1px solid var(--beige);
+      box-shadow: 0 8px 30px rgba(44,31,20,0.1);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark);
+      font-weight: 400;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--beige);
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      animation: zoomOut 8s ease forwards;
+    }
+    @keyframes zoomOut {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(44,31,20,0.35) 0%,
+        rgba(44,31,20,0.18) 50%,
+        rgba(44,31,20,0.55) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      padding: 0 1.5rem;
+      animation: fadeUp 1.2s ease 0.3s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      font-size: 1rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.02em;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      opacity: 0.9;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 1rem 2.8rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.7);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.35s;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 1rem 2.8rem;
+      background: var(--brown);
+      border: 1px solid var(--brown);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;   
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.35s;
+      cursor: pointer;
+    }
+    .btn-dark:hover { background: var(--dark); border-color: var(--dark); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.5);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1; transform: scaleY(0.6); }
+    }
+
+    /* ===== SECTIONS BASE ===== */
+    section { padding: 7rem 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+    .section-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--espresso);
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--brown); }
+    .section-body {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--dark);
+      font-weight: 300;
+      max-width: 600px;
+    }
+    .divider {
+      width: 50px; height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
+
+    /* ===== ABOUT ===== */
+    #nosotros { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-images {
+      position: relative;
+      height: 560px;
+    }
+    .about-img-main {
+      position: absolute;
+      top: 0; left: 0;
+      width: 72%;
+      height: 82%;
+      object-fit: cover;
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 52%;
+      height: 50%;
+      object-fit: cover;
+      border: 6px solid var(--white);
+    }
+    .about-badge {
+      position: absolute;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      background: var(--brown);
+      color: var(--cream);
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 2;
+      border: 3px solid var(--white);
+    }
+    .about-badge strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+    .about-badge span { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .about-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .stat strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--brown);
+      display: block;
+    }
+    .stat span { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--taupe); }
+
+    /* ===== SERVICES ===== */
+    #servicios { background: var(--cream); }
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--sand);
+    }
+    .service-card {
+      background: var(--white);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.4s;
+      position: relative;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(44,31,20,0.15); z-index: 1; }
+    .service-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform 0.6s;
+      display: block;
+    }
+    .service-card:hover .service-img { transform: scale(1.06); }
+    .service-info { padding: 1.8rem 1.8rem 2rem; }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      color: var(--espresso);
+      margin-bottom: 0.7rem;
+    }
+    .service-desc {
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: var(--taupe);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--brown);
+    }
+    .service-duration {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-left: 0.5rem;
+    }
+
+    /* ===== EXPERIENCE STRIP ===== */
+    #experiencia {
+      padding: 0;
+      background: var(--espresso);
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .exp-content {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .exp-text .section-title { color: var(--cream); }
+    .exp-text .section-body { color: rgba(245,240,232,0.75); }
+    .exp-text .divider { background: var(--gold); }
+    .exp-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .exp-feature {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+    .exp-icon {
+      width: 44px; height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+    .exp-feature h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .exp-feature p { font-size: 0.8rem; color: rgba(245,240,232,0.6); line-height: 1.7; font-weight: 300; }
+
+    /* ===== BOOKING ===== */
+    #reservar { background: var(--beige); }
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .booking-img {
+      position: relative;
+      height: 580px;
+    }
+    .booking-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .booking-img::before {
+      content: '';
+      position: absolute;
+      top: -20px; left: -20px;
+      right: 20px; bottom: 20px;
+      border: 1px solid var(--sand);
+      z-index: -1;
+    }
+
+    .booking-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      font-weight: 400;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.85rem 1rem;
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: 2px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      color: var(--espresso);
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.25s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--brown); }
+    .form-group textarea { resize: none; height: 90px; }
+    .form-submit {
+      margin-top: 0.5rem;
+      padding: 1.1rem;
+      background: var(--brown);
+      border: none;
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .form-submit:hover { background: var(--dark); }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 1.2rem 2.5rem;
+      border-radius: 3px;
+      border-left: 3px solid var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      z-index: 2000;
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+      box-shadow: 0 10px 40px rgba(44,31,20,0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-icon { color: var(--gold); font-size: 1.1rem; }
+
+    /* ===== GALLERY ===== */
+    #galeria { background: var(--white); padding: 5rem 0; }
+    .gallery-title { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 200px 200px;
+      gap: 6px;
+    }
+    .gal-item { overflow: hidden; position: relative; cursor: pointer; }
+    .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .gal-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s;
+      display: block;
+    }
+    .gal-item:hover img { transform: scale(1.08); }
+    .gal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(44,31,20,0);
+      transition: background 0.3s;
+    }
+    .gal-item:hover .gal-overlay { background: rgba(44,31,20,0.2); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 5rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,240,232,0.1);
+      margin-bottom: 2rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .footer-logo span { color: var(--gold); font-style: italic; }
+    .footer-desc { font-size: 0.82rem; color: rgba(245,240,232,0.55); line-height: 1.8; font-weight: 300; }
+    .footer-col h5 {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-col ul a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      color: rgba(245,240,232,0.6);
+      transition: color 0.25s;
+      font-weight: 300;
+    }
+    .footer-col ul a:hover { color: var(--cream); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: rgba(245,240,232,0.35);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .about-grid { gap: 3rem; }
+      .exp-content { gap: 3rem; }
+      .booking-wrap { gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 5rem 0; }
+
+      .about-grid { grid-template-columns: 1fr; }
+      .about-images { height: 380px; order: -1; }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      .exp-content { grid-template-columns: 1fr; gap: 3rem; }
+
+      .booking-wrap { grid-template-columns: 1fr; }
+      .booking-img { height: 300px; order: -1; }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(4, 200px);
+      }
+      .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .about-stats { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.6rem; }
+      .toast { white-space: normal; text-align: center; max-width: 85vw; }
+    }
+
+    /* Fade-in on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">San Vicente <span>Spa</span></a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#reservar" class="nav-cta">Reservar</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#nosotros" onclick="closeMobile()">Nosotros</a>
+  <a href="#servicios" onclick="closeMobile()">Servicios</a>
+  <a href="#experiencia" onclick="closeMobile()">Experiencia</a>
+  <a href="#galeria" onclick="closeMobile()">Galería</a>
+  <a href="#reservar" onclick="closeMobile()">Reservar Cita</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-media">
+    <img
+      src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1800&q=85&fit=crop"
+      alt="Tranquil tropical spa landscape"
+    />
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">✦ San Vicente Spa ✦</p>
+    <h1 class="hero-title">Un oasis de<br/><em>paz y armonía</em></h1>
+    <p class="hero-sub">Escápate del mundo. Déjate envolver por tratamientos exclusivos que renuevan el cuerpo, calman la mente y elevan el espíritu.</p>
+    <a href="#reservar" class="btn-primary">Reservar mi experiencia</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Descubrir</span>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-images reveal">
+        <img
+          class="about-img-main"
+          src="https://images.unsplash.com/photo-1591343395082-e120087004b4?w=800&q=80&fit=crop"
+          alt="Ambiente del spa"
+        />
+        <img
+          class="about-img-accent"
+          src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80&fit=crop"
+          alt="Tratamiento facial"
+        />
+        <div class="about-badge">
+          <strong>12</strong>
+          <span>Años de<br/>excelencia</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p class="section-tag">✦ Quiénes somos</p>
+        <h2 class="section-title">Un refugio de <em>bienestar total</em> en el corazón del Caribe</h2>
+        <div class="divider"></div>
+        <p class="section-body">San Vicente Spa nació con una visión clara: crear un espacio sagrado donde cada persona pueda reconectar consigo misma. Inspirados en la belleza natural de la República Dominicana, fusionamos técnicas ancestrales con tratamientos modernos para ofrecerte una experiencia única e inigualable.</p>
+        <p class="section-body" style="margin-top:1rem;">Nuestro equipo de especialistas certificados está dedicado a brindarte atención personalizada en un entorno de lujo, tranquilidad y calidez caribeña.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <strong>8k+</strong>
+            <span>Clientes felices</span>
+          </div>
+          <div class="stat">
+            <strong>24</strong>
+            <span>Tratamientos</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span>Natural</span>
+          </div>
+        </div>
+        <a href="#reservar" class="btn-dark" style="margin-top:2.2rem;display:inline-block;">Conocer más</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="servicios">
+  <div class="container">
+    <div class="services-header">
+      <div class="reveal">
+        <p class="section-tag">✦ Lo que ofrecemos</p>
+        <h2 class="section-title">Nuestros <em>Servicios</em></h2>
+      </div>
+      <a href="#reservar" class="btn-dark reveal">Ver todos los servicios</a>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=700&q=80&fit=crop"
+          alt="Masaje relajante"/>
+        <div class="service-info">
+          <p class="service-num">01</p>
+          <h3 class="service-name">Masaje Relajante</h3>
+          <p class="service-desc">Técnica sueca que libera la tensión muscular y devuelve la calma a tu cuerpo y mente con aceites esenciales caribeños.</p>
+          <span class="service-price">RD$2,500</span>
+          <span class="service-duration">· 60 min</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=700&q=80&fit=crop"
+          alt="Tratamiento facial"/>
+        <div class="service-info">
+          <p class="service-num">02</p>
+          <h3 class="service-name">Facial Luminosidad</h3>
+          <p class="service-desc">Limpieza profunda, exfoliación e hidratación con extractos de frutas tropicales para una piel radiante y rejuvenecida.</p>
+          <span class="service-price">RD$3,200</span>
+          <span class="service-duration">· 75 min</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=700&q=80&fit=crop"
+          alt="Masaje con piedras calientes"/>
+        <div class="service-info">
+          <p class="service-num">03</p>
+          <h3 class="service-name">Masaje con Piedras</h3>
+          <p class="service-desc">Piedras volcánicas calientes que penetran profundamente en los músculos, eliminando el estrés y equilibrando tu energía.</p>
+          <span class="service-price">RD$3,800</span>
+          <span class="service-duration">· 90 min</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=700&q=80&fit=crop"
+          alt="Aromaterapia"/>
+        <div class="service-info">
+          <p class="service-num">04</p>
+          <h3 class="service-name">Aromaterapia</h3>
+          <p class="service-desc">Combinación de masaje y aceites esenciales naturales que estimulan los sentidos y restauran el equilibrio emocional.</p>
+          <span class="service-price">RD$2,800</span>
+          <span class="service-duration">· 60 min</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1506126279646-a697353d3166?w=700&q=80&fit=crop"
+          alt="Exfoliación corporal"/>
+        <div class="service-info">
+          <p class="service-num">05</p>
+          <h3 class="service-name">Exfoliación Corporal</h3>
+          <p class="service-desc">Ritual exfoliante con sal marina y coco que renueva la piel, dejándola suave, firme e iluminada desde la primera sesión.</p>
+          <span class="service-price">RD$2,200</span>
+          <span class="service-duration">· 45 min</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <img class="service-img"
+          src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=700&q=80&fit=crop"
+          alt="Paquete pareja"/>
+        <div class="service-info">
+          <p class="service-num">06</p>
+          <h3 class="service-name">Ritual en Pareja</h3>
+          <p class="service-desc">Una experiencia íntima y especial diseñada para dos. Incluye masaje, facial y una copa de champagne en sala privada.</p>
+          <span class="service-price">RD$7,500</span>
+          <span class="service-duration">· 120 min</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE STRIP ===== -->
+<section id="experiencia">
+  <img class="exp-bg"
+    src="https://images.unsplash.com/photo-1588286840104-8957b019727f?w=1600&q=70&fit=crop"
+    alt="Spa background"/>
+  <div class="exp-content">
+    <div class="exp-text reveal">
+      <p class="section-tag">✦ La experiencia San Vicente</p>
+      <h2 class="section-title" style="color:var(--cream)">Donde el lujo <em style="color:var(--gold)">y la naturaleza</em> se encuentran</h2>
+      <div class="divider"></div>
+      <p class="section-body">Cada visita a San Vicente Spa es un viaje sensorial. Desde el momento en que cruzas nuestra puerta, el aroma, la música y la calidez de nuestro equipo te transportan a un estado de calma profunda.</p>
+      <a href="#reservar" class="btn-primary" style="margin-top:2rem;display:inline-block;">Reservar ahora</a>
+    </div>
+    <div class="exp-features reveal">
+      <div class="exp-feature">
+        <div class="exp-icon">✦</div>
+        <div>
+          <h4>Productos 100% naturales</h4>
+          <p>Utilizamos ingredientes orgánicos y locales, libres de químicos, para cuidar tu piel y el planeta.</p>
+        </div>
+      </div>
+      <div class="exp-feature">
+        <div class="exp-icon">✦</div>
+        <div>
+          <h4>Terapeutas certificados</h4>
+          <p>Nuestro equipo cuenta con certificaciones internacionales y años de experiencia en bienestar holístico.</p>
+        </div>
+      </div>
+      <div class="exp-feature">
+        <div class="exp-icon">✦</div>
+        <div>
+          <h4>Ambiente de total privacidad</h4>
+          <p>Salas diseñadas para garantizar tu comodidad, privacidad y máxima relajación en todo momento.</p>
+        </div>
+      </div>
+      <div class="exp-feature">
+        <div class="exp-icon">✦</div>
+        <div>
+          <h4>Experiencias personalizadas</h4>
+          <p>Cada tratamiento se adapta a tus necesidades únicas para resultados visibles desde la primera sesión.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOOKING ===== -->
+<section id="reservar">
+  <div class="container">
+    <div class="booking-wrap">
+      <div class="booking-img reveal">
+        <img
+          src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80&fit=crop"
+          alt="Reservar cita spa"/>
+      </div>
+      <div class="reveal">
+        <p class="section-tag">✦ Agenda tu visita</p>
+        <h2 class="section-title">Reserva tu <em>cita</em></h2>
+        <div class="divider"></div>
+        <p class="section-body" style="margin-bottom:2rem;">Completa el formulario y uno de nuestros especialistas confirmará tu cita. También puedes llamarnos al <strong>(809) 555-0100</strong>.</p>
+
+        <div class="booking-form" id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" id="fname" placeholder="Tu nombre" />
+            </div>
+            <div class="form-group">
+              <label>Apellido</label>
+              <input type="text" id="lname" placeholder="Tu apellido" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="phone" placeholder="(809) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label>Correo electrónico</label>
+              <input type="email" id="email" placeholder="tu@correo.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Servicio</label>
+            <select id="service">
+              <option value="">— Selecciona un servicio —</option>
+              <option>Masaje Relajante · RD$2,500</option>
+              <option>Facial Luminosidad · RD$3,200</option>
+              <option>Masaje con Piedras · RD$3,800</option>
+              <option>Aromaterapia · RD$2,800</option>
+              <option>Exfoliación Corporal · RD$2,200</option>
+              <option>Ritual en Pareja · RD$7,500</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Fecha</label>
+              <input type="date" id="date" />
+            </div>
+            <div class="form-group">
+              <label>Hora</label>
+              <select id="time">
+                <option value="">— Selecciona —</option>
+                <option>09:00 AM</option>
+                <option>10:00 AM</option>
+                <option>11:00 AM</option>
+                <option>12:00 PM</option>
+                <option>02:00 PM</option>
+                <option>03:00 PM</option>
+                <option>04:00 PM</option>
+                <option>05:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mensaje especial (opcional)</label>
+            <textarea id="message" placeholder="¿Algún comentario o solicitud especial?"></textarea>
+          </div>
+          <button class="form-submit" onclick="submitBooking()">
+            ✦ &nbsp;Confirmar Reserva
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section id="galeria">
+  <div class="container">
+    <div class="gallery-title reveal">
+      <p class="section-tag">✦ Nuestro espacio</p>
+      <h2 class="section-title">Un ambiente <em>diseñado para ti</em></h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=900&q=80&fit=crop" alt="Sala spa"/>
+        <div class="gal-overlay"></div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&fit=crop" alt="Masaje"/>
+        <div class="gal-overlay"></div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80&fit=crop" alt="Piscina"/>
+        <div class="gal-overlay"></div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&fit=crop" alt="Bienestar"/>
+        <div class="gal-overlay"></div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1498330177096-689e3fb901ca?w=600&q=80&fit=crop" alt="Flores spa"/>
+        <div class="gal-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-logo">San Vicente <span>Spa</span></span>
+        <p class="footer-desc">Tu refugio de bienestar en la República Dominicana. Un espacio sagrado donde cuerpo, mente y espíritu se renuevan.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Servicios</h5>
+        <ul>
+          <li><a href="#servicios">Masaje Relajante</a></li>
+          <li><a href="#servicios">Facial Luminosidad</a></li>
+          <li><a href="#servicios">Masaje con Piedras</a></li>
+          <li><a href="#servicios">Aromaterapia</a></li>
+          <li><a href="#servicios">Ritual en Pareja</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#experiencia">Experiencia</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#reservar">Reservar Cita</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="#">(809) 555-0100</a></li>
+          <li><a href="#">info@San Vicentespa.do</a></li>
+          <li><a href="#">Santo Domingo, RD</a></li>
+          <li><a href="#">Lun–Sáb: 9am – 7pm</a></li>
+          <li><a href="#">Dom: 10am – 5pm</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 San Vicente Spa & Wellness. Todos los derechos reservados.</span>
+      <span>Diseñado con ✦ en República Dominicana</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✦</span>
+  <span id="toastMsg">¡Cita confirmada con éxito!</span>
+</div>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // Set min date to today
+  const dateInput = document.getElementById('date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min', today);
+
+  // Booking form
+  function submitBooking() {
+    const fname   = document.getElementById('fname').value.trim();
+    const lname   = document.getElementById('lname').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const date    = document.getElementById('date').value;
+    const time    = document.getElementById('time').value;
+
+    if (!fname || !lname || !phone || !email || !service || !date || !time) {
+      showToast('⚠️ Por favor completa todos los campos requeridos.', true);
+      return;
+    }
+
+    const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailReg.test(email)) {
+      showToast('⚠️ Por favor ingresa un correo válido.', true);
+      return;
+    }
+
+    const [svcName] = service.split(' ·');
+    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('es-DO', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    showToast(`✦ ¡Cita reservada, ${fname}! ${svcName} el ${dateFormatted} a las ${time}.`);
+
+    // Reset form
+    document.getElementById('fname').value = '';
+    document.getElementById('lname').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('service').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('time').value = '';
+    document.getElementById('message').value = '';
+  }
+
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+    toast.style.borderLeftColor = isError ? '#c0392b' : 'var(--gold)';
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5500);
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
